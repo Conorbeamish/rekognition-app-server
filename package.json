@@ -1,0 +1,28 @@
+{
+  "name": "rekognition-app-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "aws-sdk": "^2.656.0",
+    "base64-img": "^1.0.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Conorbeamish/rekognition-app-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Conorbeamish/rekognition-app-server/issues"
+  },
+  "homepage": "https://github.com/Conorbeamish/rekognition-app-server#readme"
+}
