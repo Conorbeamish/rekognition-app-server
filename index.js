@@ -1,7 +1,13 @@
 const express = require("express");
 const AWS = require("aws-sdk");
-const base64Img = require("base64-img");
-const app = express()
+const bodyParser = require("body-parser");
+const axios = require("axios");
+const app = express();
+const cors = require("cors")
+
+app.use(bodyParser.json())
+
+app.use(cors())
 
 require("dotenv").config()
 
@@ -16,25 +22,34 @@ AWS.config.update({
 
 const rekognition = new AWS.Rekognition();
 
-const fs = require('fs');
-const file = './test-images/test-image.jpg';
-const bitmap = fs.readFileSync(file);
-const buffer = new Buffer.from(bitmap, 'base64')
+//Routes
+app.post("/", (req, res, next) => {
+    const url = req.body.url
+    return axios
+        .get(url, {
+            responseType: 'arraybuffer'
+        })
+        .then(response => new Buffer.from(response.data, 'base64'))
+        .then(encodedResponse => {
+            let params = {
+                Image: {
+                  Bytes: encodedResponse
+                },
+                "MaxLabels": 10,
+                "MinConfidence": 75
+             };
+            rekognition.detectLabels(params, (err, data) => {
+                if (err) { 
+                    res.status(400).send({message: "Not a valid image URL"});
+                } else {
+                    res.send(data);
+                }
+            })
 
-let params = {
-   Image: {
-     Bytes: buffer
-   },
-   "MaxLabels": 10,
-   "MinConfidence": 77
-};
-
-rekognition.detectLabels(params, (err, data) => {
-    if (err) { 
-        console.log(err)
-    } else {
-        console.log(data);
-    }
+        })
+        .catch(err => {
+            return next(err)
+        });
 })
 
 
