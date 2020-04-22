@@ -25,6 +25,8 @@ const rekognition = new AWS.Rekognition();
 //Routes
 app.post("/", (req, res, next) => {
     const url = req.body.url
+    const maxLabels = req.body.maxLabels
+    const minConfidence = req.body.ImageminConfidence
     return axios
         .get(url, {
             responseType: 'arraybuffer'
@@ -35,8 +37,8 @@ app.post("/", (req, res, next) => {
                 Image: {
                   Bytes: encodedResponse
                 },
-                "MaxLabels": 10,
-                "MinConfidence": 75
+                "MaxLabels": maxLabels,
+                "MinConfidence": minConfidence
              };
             rekognition.detectLabels(params, (err, data) => {
                 if (err) { 
@@ -48,7 +50,7 @@ app.post("/", (req, res, next) => {
 
         })
         .catch(err => {
-            return next(err)
+            res.status(400).send({message: "Not a valid image URL"});
         });
 })
 
