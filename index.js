@@ -23,7 +23,10 @@ AWS.config.update({
 const rekognition = new AWS.Rekognition();
 
 //Routes
-app.post("/", (req, res, next) => {
+
+
+
+app.post("/api", (req, res, next) => {
     const url = req.body.url
     const maxLabels = req.body.maxLabels
     const minConfidence = req.body.ImageminConfidence
