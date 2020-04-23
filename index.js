@@ -3,8 +3,8 @@ const AWS = require("aws-sdk");
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const app = express();
-const cors = require("cors")
-const path = require("path")
+const cors = require("cors");
+const path = require("path");
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,7 +12,7 @@ app.use(cors())
 
 require("dotenv").config()
 
-const port = process.env.port || 5000
+const port = process.env.PORT || 5000
 
 AWS.config.update({
     accessKeyId: process.env.ACCESS_KEY_ID,
