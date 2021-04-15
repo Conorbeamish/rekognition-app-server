@@ -8,7 +8,9 @@ const path = require("path");
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors())
+app.use(cors({
+    origin: "https://cb-image-analyser.herokuapp.com/"
+}))
 
 require("dotenv").config()
 
